@@ -26,7 +26,7 @@ class AccountController extends Controller
         return view('admin.accounts.withdraw', compact('customers'));
     }
 
-    public function transactions($user_id)
+    /*public function transactions($user_id)
     {
 
         $user = User::findOrFail($user_id);
@@ -37,6 +37,19 @@ class AccountController extends Controller
 
         return view('admin.accounts.transactions', compact('transactions','user'));
 
+    }*/
+
+    public function transactions($user_id)
+    {
+        $user = User::findOrFail($user_id);
+
+        $transactions = Transaction::where('user_id', $user_id)
+                        ->latest()
+                        ->get();
+
+        $balance = $transactions->first()->balance_after ?? 0;
+
+        return view('admin.accounts.transactions', compact('transactions','user','balance'));
     }
 
     public function deposit(Request $request)

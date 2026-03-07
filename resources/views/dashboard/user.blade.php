@@ -43,52 +43,58 @@
 </div>
 
 
-<div class="card mt-4">
+<!-- Recent Transactions -->
 
-<div class="card-header">
-<h5>Recent Transactions</h5>
+<div class="card shadow border-0 mt-4">
+
+<div class="card-header bg-white">
+<h5 class="mb-0">Recent Transactions</h5>
 </div>
 
-<div class="card-body">
-
-<table class="table table-striped">
-
-<tr>
-<th>Type</th>
-<th>Currency</th>
-<th>Amount</th>
-<th>Date</th>
-</tr>
+<div class="card-body p-0">
 
 @foreach($transactions as $t)
 
-<tr>
+<div class="d-flex justify-content-between align-items-center px-4 py-3 border-bottom">
 
-<td>
+<div>
+
+<div class="fw-bold">
+{{ $t->description ?? 'Transaction' }}
+</div>
+
+<div class="text-muted small">
+{{ $t->created_at->format('d M Y H:i') }}
+</div>
+
+</div>
+
+<div class="text-end">
 
 @if($t->type=='deposit')
-<span class="badge bg-success">Deposit</span>
+
+<div class="text-success fw-bold">
++ {{ $t->currency }} {{ number_format($t->amount,2) }}
+</div>
+
 @else
-<span class="badge bg-danger">Withdraw</span>
+
+<div class="text-danger fw-bold">
+- {{ $t->currency }} {{ number_format($t->amount,2) }}
+</div>
+
 @endif
 
-</td>
+</div>
 
-<td>{{ $t->currency }}</td>
-
-<td>{{ $t->amount }}</td>
-
-<td>{{ $t->created_at->format('d M Y') }}</td>
-
-</tr>
+</div>
 
 @endforeach
 
-</table>
-
 </div>
 
 </div>
+
 
 
 <button onclick="alert('Please contact support')" class="btn btn-warning">

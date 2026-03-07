@@ -7,80 +7,63 @@
 <div class="section-body">
 <div class="container-fluid">
 
-<h1 class="page-title">
-Transactions - {{ $user->name }}
-</h1>
+<h2 class="mb-4">Transactions - {{ $user->name }}</h2>
 
-<div class="card">
+<div class="card shadow-sm">
 
 <div class="card-body">
 
-<div class="table-responsive">
-
-<table class="table table-striped">
-
-<thead>
-
-<tr>
-<th>ID</th>
-<th>Date</th>
-<th>Type</th>
-<th>Currency</th>
-<th>Amount</th>
-<th>Balance After</th>
-<th>Description</th>
-</tr>
-
-</thead>
-
-<tbody>
+<div class="text-center mb-4">
+<h6 class="text-muted">Current Balance</h6>
+<h2 class="fw-bold text-success">{{ number_format($balance,2) }}</h2>
+</div>
 
 @foreach($transactions as $t)
 
-<tr>
+<div class="d-flex justify-content-between align-items-center border-bottom py-3">
 
-<td>{{ $t->id }}</td>
+<div>
 
-<td>{{ $t->created_at->format('d M Y H:i') }}</td>
+<div class="fw-bold">
+{{ $t->description }}
+</div>
 
-<td>
+<div class="text-muted small">
+{{ $t->created_at->format('d M Y H:i') }}
+</div>
+
+</div>
+
+<div class="text-end">
 
 @if($t->type == 'deposit')
 
-<span class="badge bg-success">Deposit</span>
+<div class="text-success fw-bold">
++ {{ number_format($t->amount,2) }}
+</div>
 
 @else
 
-<span class="badge bg-danger">Withdraw</span>
+<div class="text-danger fw-bold">
+- {{ number_format($t->amount,2) }}
+</div>
 
 @endif
 
-</td>
+<div class="small text-muted">
+Bal: {{ number_format($t->balance_after,2) }}
+</div>
 
-<td>{{ $t->currency }}</td>
+</div>
 
-<td>{{ number_format($t->amount,2) }}</td>
-
-<td>{{ number_format($t->balance_after,2) }}</td>
-
-<td>{{ $t->description }}</td>
-
-</tr>
+</div>
 
 @endforeach
 
-</tbody>
-
-</table>
-
+</div>
 </div>
 
 </div>
-
-</div>
-
-</div>
-
 </div>
 
 @endsection

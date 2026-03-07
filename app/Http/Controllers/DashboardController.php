@@ -54,7 +54,6 @@ class DashboardController extends Controller
 
         $transactions = Transaction::where('user_id', auth()->id())
                         ->latest()
-                        ->limit(5)
                         ->get();
 
         return view('dashboard.user', compact('account','transactions'));
